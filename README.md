@@ -58,6 +58,23 @@ need to run them separately. Open the app at `http://localhost:5173`.
 
 These are done in your WSO2 IS Console, against the test user **Jane**.
 
+### Create the credential templates (one-time, before your first demo run)
+
+**Verifiable Credentials → Credential Templates → Create**, and set up three templates:
+
+- `Person Identity Credential`
+- `Utility Credential`
+- `Bank ID`
+
+When you create a template, you pick which **user claims** get carried onto the credential it
+issues — e.g. `Person Identity Credential` carries claims like given name, family name and date
+of birth; `Utility Credential` carries the address claims; `Bank ID` carries the `IBAN` claim.
+A template only maps *existing* user claims onto the credential, it doesn't create new claims —
+so if a claim you want on a credential isn't already on the user schema (e.g. the custom `IBAN`
+claim this demo uses), add it to the SCIM2 user schema first (**Attributes → custom schema**),
+and it'll then be selectable when you build the claim list on the template. Do this setup once;
+it doesn't need to be repeated between demo runs.
+
 ### Reset Jane's profile (do this before every demo run)
 
 **Users → Jane** → edit her profile and set:
@@ -69,20 +86,24 @@ These are done in your WSO2 IS Console, against the test user **Jane**.
 These claims drive which features are unlocked in the app (see the demo scenario below), so
 resetting them lets you replay the full story from a clean state each time.
 
-### Load Jane's wallet with her starting credentials
+### Pre-load Jane's wallet with her starting credentials (do this before every demo run)
 
 Jane's wallet needs to already hold her **Person Identity** and **Utility** credentials before
-the demo starts (her **Bank** credential is issued later, mid-demo — don't provision it now).
+the demo starts, to illustrate that she's already a verified government-ID holder with a
+utility bill on record (her **Bank** credential is issued later, mid-demo — don't provision it
+now).
 
-**Verifiable Credentials → Credential Templates**, for each of:
+For each of `Person Identity Credential` and `Utility Credential`:
 
-- `Person Identity Credential`
-- `Utility Credential`
+1. Open the template under **Verifiable Credentials → Credential Templates**.
+2. Copy its **Offer URL**.
+3. Generate a QR code from that URL (any QR generator works — it's an
+   `openid-credential-offer://...` deep link).
+4. Scan the QR code with Lissi on your phone. It may prompt you to log in before it hands the
+   credential to the wallet.
 
-— open the template, copy its **Offer URL**, generate a QR code from that URL, and scan it
-with Lissi on your phone. It may prompt you to log in before it hands the credential to the
-wallet. Do **not** do this for the `Bank ID` template — see the demo scenario below for when
-that one comes in.
+Do **not** do this for the `Bank ID` template — see the demo scenario below for when that one
+comes in.
 
 ## Demo scenario
 

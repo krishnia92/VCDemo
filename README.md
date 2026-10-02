@@ -24,8 +24,7 @@ into the main server so starting the server starts them too:
 
 - Node.js + npm
 - [ngrok](https://ngrok.com/) (free account is fine)
-- **Lissi Wallet app, version 2.11, on your phone — this specific version.** Newer versions of
-  Lissi have not been confirmed to work with this demo; install/keep 2.11 for live testing.
+- **Lissi Wallet app, version 2.11, on your phone.**
 
 ### Why ngrok?
 

@@ -14,7 +14,7 @@ Server**, wrapped in a fictional banking app called **Bank Of Asgard**.
 | Folder | What it is |
 |---|---|
 | `wso2is-7.4.0-SNAPSHOT-demo/` | The WSO2 Identity Server instance for this demo. Acts as both the **Credential Issuer** (OID4VCI — issues the Person Identity, Utility, and Bank credentials) and the **Verifier backend** (OID4VP — verifies presented credentials). Also contains `set-ngrok-url.sh` (see Step 3 below), which re-syncs WSO2 IS's hostname config whenever you get a new ngrok tunnel URL. |
-| `bank-of-asgard-main/` | The sample banking app. `app/` is the React frontend customers use; `server/` is its Express backend. `server/verifiers/` contains the two verification portals (see below) — they run as part of the server now, not as separate apps. |
+| `bank-of-asgard-main/` | The sample banking app. `app/` is the React frontend customers use; `server/` is its Express backend. `server/verifiers/` contains the two verification portals (see below). |
 
 Inside `bank-of-asgard-main/server/verifiers/`, there are two verification portals, both merged
 into the main server so starting the server starts them too:

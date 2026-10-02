@@ -16,9 +16,6 @@ node_modules
 # GitHub's file-size limit on its own). See README.md for how to get it.
 /wso2is-7.4.0-SNAPSHOT-demo/
 
-# Present in this folder but unused by this demo (see README.md).
-/asgardeo-react-app/
-
 # Build output
 dist
 dist-ssr

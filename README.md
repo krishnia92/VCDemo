@@ -34,12 +34,6 @@ internet to issue and verify credentials — it can't reach `localhost` on your 
 ngrok opens a temporary public HTTPS tunnel to your local WSO2 IS instance so the wallet can
 reach it from anywhere.
 
-**Important:** ngrok assigns a new hostname to your tunnel each time you start it (unless
-you've reserved a static domain on your own ngrok account). This means every time you restart
-the tunnel — and certainly if someone else clones this repo and runs it from their own ngrok
-account — the hostname changes, and several config files need to be updated to match. This is
-covered in the steps below; skipping it is the most common reason the demo fails to connect.
-
 ## Startup steps
 
 Replace `<download_folder>` with wherever you've placed this folder.

@@ -55,13 +55,24 @@ ngrok http https://localhost:9443
 
 Copy the `https://<your-hostname>.ngrok-free.app` (or similar) URL it prints.
 
-### 3. Update the app/verifier configs to match your ngrok hostname
+### 3. Re-sync WSO2 IS to the new ngrok hostname
+
+These are manual edits (no script is included in this repo):
+
+1. Open `wso2is-7.4.0-SNAPSHOT-demo/repository/conf/deployment.toml` and, under `[server]`,
+   change `hostname = "..."` to your new ngrok hostname (just the host, no `https://` and no
+   trailing slash).
+2. Open `wso2is-7.4.0-SNAPSHOT-demo/repository/deployment/server/webapps/console/deployment.config.json`
+   and change `"serverOrigin": "https://..."` to `"serverOrigin": "https://<your-new-hostname>"`.
+3. Restart WSO2 IS for these changes to take effect.
+
+### 4. Update the app/verifier configs to match your ngrok hostname
 
 - `bank-of-asgard-main/server/verifiers/verifier-portal/.env` → `IS_BASE_URL`
 - `bank-of-asgard-main/server/verifiers/vc-verifier-address/.env` → `IS_BASE_URL`
 - `bank-of-asgard-main/server/.env` → `ASGARDEO_BASE_URL` and `ASGARDEO_TOKEN_ENDPOINT`
 
-### 4. Reset Jane's profile (do this before every demo run)
+### 5. Reset Jane's profile (do this before every demo run)
 
 In the WSO2 IS Console: **Users → Jane** → edit her profile and set:
 
@@ -72,7 +83,7 @@ In the WSO2 IS Console: **Users → Jane** → edit her profile and set:
 These claims drive which features are unlocked in the app (see the demo scenario below), so
 resetting them lets you replay the full story from a clean state each time.
 
-### 5. Load Jane's wallet with her starting credentials
+### 6. Load Jane's wallet with her starting credentials
 
 Jane's wallet needs to already hold her **Person Identity** and **Utility** credentials before
 the demo starts (her **Bank** credential is issued later, mid-demo — don't provision it now).
@@ -87,7 +98,7 @@ with Lissi on your phone. It may prompt you to log in before it hands the creden
 wallet. Do **not** do this for the `Bank ID` template — see the demo scenario below for when
 that one comes in.
 
-### 6. Start the app and server
+### 7. Start the app and server
 
 ```bash
 cd <download_folder>/bank-of-asgard-main/app

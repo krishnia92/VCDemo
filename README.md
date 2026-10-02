@@ -136,7 +136,7 @@ address) — loaded in step 6 above.
 5. Jane verifies her address — this presents her Utility Credential through the address
    verifier portal. Once verified, her address becomes visible under her profile in the app.
 6. Jane can now download her account statement.
-7. Finally, now that she's a verified, wallet-linked customer, Bank Of Asgard can issue Jane a
+7. Finally, Bank Of Asgard can also issue Jane a
    **Bank credential** (carrying her IBAN) to her wallet — using the app's **Issue Credentials**
    functionality and the `Bank ID` template that was deliberately held back in step 6.
 

@@ -1,0 +1,357 @@
+openapi: 3.0.3
+info:
+  title: Node.js User Management API
+  version: "1.0.0"
+  description: |
+    This API provides endpoints for user registration, risk analysis based on IP geolocation,
+    account closure, and a basic health check.
+servers:
+  - url: http://localhost:5000
+    description: Local development server
+paths:
+  /health:
+    get:
+      summary: Health check
+      description: Returns the current status of the server.
+      responses:
+        '200':
+          description: Successful health check
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthResponse'
+  /signup:
+    post:
+      summary: Register a new user
+      description: |
+        Creates a new user by passing in the required details. It internally calls an external SCIM2 API
+        using an access token retrieved via client credentials.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SignupRequest'
+      responses:
+        '200':
+          description: User registered successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SignupResponse'
+        '400':
+          description: Signup failed or bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /business-signup:
+    post:
+      summary: Register a new user
+      description: |
+        Creates a new user by passing in the required details. It internally calls an external SCIM2 API
+        using an access token retrieved via client credentials.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BusinessSignupRequest'
+      responses:
+        '200':
+          description: User registered successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BusinessSignupResponse'
+        '400':
+          description: Signup failed or bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /risk:
+    post:
+      summary: IP risk analysis
+      description: |
+        Checks whether the IP address belongs to the provided country using an IP geolocation service.
+        Returns a boolean indicating the presence of a risk.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RiskRequest'
+      responses:
+        '200':
+          description: Risk analysis response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RiskResponse'
+        '400':
+          description: Missing required IP or country parameter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error during processing
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /close-account:
+    delete:
+      summary: Close or delete a user account
+      description: |
+        Deletes a user account specified by the query parameter `userId` by invoking the SCIM2 API.
+      responses:
+        '200':
+          description: Account removed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloseAccountResponse'
+        '400':
+          description: Failed to delete user or bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /close-business-account:
+    delete:
+      summary: Close or delete a business user account
+      description: |
+        Deletes a business user account specified by the query parameter `userId` by invoking the SCIM2 API.
+      responses:
+        '200':
+          description: Account removed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloseBusinessAccountResponse'
+        '400':
+          description: Failed to delete user or bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /business:
+    get:
+      summary: Get business details
+      description: Returns details of the business
+      responses:
+        '200':
+          description: Successful business detail retrieval
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BusinessResponse'
+        '400':
+          description: Failed to get business details or bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /business-update:
+    patch:
+      summary: Update business details
+      description: Updates details of the business
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BusinessUpdateRequest'
+      responses:
+        '200':
+          description: Successful business detail update
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BusinessUpdateResponse'
+        '400':
+          description: Failed to update business details or bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    HealthResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          example: OK
+    SignupRequest:
+      type: object
+      required:
+        - username
+        - password
+        - email
+        - firstName
+        - lastName
+        - country
+        - accountType
+        - dateOfBirth
+        - mobile
+      properties:
+        username:
+          type: string
+          example: johndoe
+        password:
+          type: string
+          example: secret123
+        email:
+          type: string
+          format: email
+          example: johndoe@example.com
+        firstName:
+          type: string
+          example: John
+        lastName:
+          type: string
+          example: Doe
+        country:
+          type: string
+          example: USA
+        accountType:
+          type: string
+          example: standard
+        dateOfBirth:
+          type: string
+          format: date
+          example: 1990-01-01
+        mobile:
+          type: string
+          example: "+1234567890"
+    SignupResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: User registered successfully
+        data:
+          type: object
+          description: Response data returned from the SCIM2 API.
+    BusinessSignupRequest:
+      type: object
+      required:
+        - username
+        - password
+        - email
+        - firstName
+        - lastName
+        - country
+        - accountType
+        - dateOfBirth
+        - mobile
+        - businessName
+      properties:
+        username:
+          type: string
+          example: johndoe
+        password:
+          type: string
+          example: secret123
+        email:
+          type: string
+          format: email
+          example: johndoe@example.com
+        firstName:
+          type: string
+          example: John
+        lastName:
+          type: string
+          example: Doe
+        country:
+          type: string
+          example: USA
+        accountType:
+          type: string
+          example: standard
+        dateOfBirth:
+          type: string
+          format: date
+          example: 1990-01-01
+        mobile:
+          type: string
+          example: "+1234567890"
+    BusinessSignupResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Business user registered successfully
+        data:
+          type: object
+          description: Response data returned from the SCIM2 API.
+    RiskRequest:
+      type: object
+      required:
+        - ip
+        - country
+      properties:
+        ip:
+          type: string
+          example: "192.168.1.1"
+        country:
+          type: string
+          example: USA
+    RiskResponse:
+      type: object
+      properties:
+        hasRisk:
+          type: boolean
+          example: true
+    CloseAccountResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Account removed successfully
+        data:
+          type: object
+          description: Response data returned from the SCIM2 API.
+    CloseBusinessAccountResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Business account removed successfully
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          example: An error occurred while processing the request
+    BusinessResponse:
+      type: object
+      properties:
+        businessRegistrationNumber:
+          type: string
+          example: 1234v
+    BusinessUpdateRequest:
+      type: object
+      required:
+        - organizationId
+        - operation
+        - businessRegistrationNumber
+      properties:
+        organizationId:
+          type: string
+          example: 0ade4ec0-a372-513a-bdcc-2e1fc35bd61e
+        operation:
+          type: string
+          example: ADD
+        businessRegistrationNumber:
+          type: string
+          example: 1234v
+    BusinessUpdateResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Business details updated successfully

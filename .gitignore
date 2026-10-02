@@ -1,0 +1,33 @@
+# Dependencies (reinstall with npm install / pnpm install)
+node_modules
+
+# Secrets - every .env file in this repo contains real client secrets/passwords.
+# Only .env.example templates are tracked.
+.env
+.env.bak*
+.env.local
+
+# OS / editor cruft
+.DS_Store
+*.log
+
+# WSO2 Identity Server runtime distribution - not tracked here (binary
+# install, ~1.1GB including a runtime H2 database file that exceeds
+# GitHub's file-size limit on its own). See README.md for how to get it.
+/wso2is-7.4.0-SNAPSHOT-demo/
+
+# Present in this folder but unused by this demo (see README.md).
+/asgardeo-react-app/
+
+# Build output
+dist
+dist-ssr
+*.local
+**/public/config.js
+
+# Editor/debug backup copies made during live demo troubleshooting - not
+# meant to be tracked.
+*.bak
+*.bak-*
+*.bak_*
+*.bak2

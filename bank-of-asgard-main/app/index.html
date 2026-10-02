@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bank of Asgard</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script>
+      // Must run BEFORE any module script loads (module imports are hoisted
+      // and @asgardeo/react's own bundle likely captures window.fetch at its
+      // own top level). Bypasses ngrok's free-tier browser-warning
+      // interstitial for every fetch() call this page makes to any
+      // *.ngrok-free.dev / *.ngrok.io host, so background SDK calls
+      // (jwks, branding-preference, token, etc.) reach the real backend
+      // instead of ngrok's HTML warning page (which sends no CORS headers).
+      (function () {
+        var originalFetch = window.fetch;
+        window.fetch = function (input, init) {
+          var url = typeof input === "string" ? input : (input && input.url);
+          if (url && /ngrok-free\.(dev|app)|\.ngrok\.io/.test(url)) {
+            init = init || {};
+            var headers = new Headers(init.headers || (typeof input !== "string" && input ? input.headers : undefined));
+            headers.set("ngrok-skip-browser-warning", "true");
+            init.headers = headers;
+          }
+          return originalFetch.call(this, input, init);
+        };
+
+        var OrigXHROpen = XMLHttpRequest.prototype.open;
+        XMLHttpRequest.prototype.open = function (method, url) {
+          var result = OrigXHROpen.apply(this, arguments);
+          if (url && /ngrok-free\.(dev|app)|\.ngrok\.io/.test(url)) {
+            try {
+              this.setRequestHeader("ngrok-skip-browser-warning", "true");
+            } catch (e) {
+              // ignore - header will just not be set for this request
+            }
+          }
+          return result;
+        };
+      })();
+    </script>
+    <script type="module" src="/src/main.jsx"></script>
+    <script src="%VITE_CONFIG_SRC%"></script>
+  </body>
+</html>

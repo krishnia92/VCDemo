@@ -8,7 +8,7 @@ Server**, wrapped in a fictional banking app called **Bank Of Asgard**.
 
 | Folder | What it is |
 |---|---|
-| `wso2is-7.4.0-SNAPSHOT-demo/` | The WSO2 Identity Server instance for this demo. Acts as both the **Credential Issuer** (OID4VCI — issues the Person Identity, Utility, and Bank credentials) and the **Verifier backend** (OID4VP — verifies presented credentials). Also contains `set-ngrok-url.sh` (see Step 3 below), which re-syncs WSO2 IS's hostname config whenever you get a new ngrok tunnel URL. |
+| `wso2is-7.4.0-SNAPSHOT-demo/` | The WSO2 Identity Server instance for this demo. Acts as both the **Credential Issuer** (OID4VCI — issues the Person Identity, Utility, and Bank credentials) and the **Verifier backend** (OID4VP — verifies presented credentials). |
 | `bank-of-asgard-main/` | The sample banking app. `app/` is the React frontend customers use; `server/` is its Express backend. `server/verifiers/` contains the two verification portals (see below). |
 
 Inside `bank-of-asgard-main/server/verifiers/`, there are two verification portals, both merged
@@ -55,25 +55,13 @@ ngrok http https://localhost:9443
 
 Copy the `https://<your-hostname>.ngrok-free.app` (or similar) URL it prints.
 
-### 3. Re-sync WSO2 IS to the new ngrok hostname
-
-```bash
-cd <download_folder>/wso2is-7.4.0-SNAPSHOT-demo
-./set-ngrok-url.sh <your-ngrok-hostname>
-```
-
-This updates `deployment.toml` and the Console's `deployment.config.json`. **Restart WSO2 IS**
-afterwards for it to take effect.
-
-### 4. Manually update the app/verifier configs to match
-
-The script above does **not** touch these — update them by hand to the same ngrok hostname:
+### 3. Update the app/verifier configs to match your ngrok hostname
 
 - `bank-of-asgard-main/server/verifiers/verifier-portal/.env` → `IS_BASE_URL`
 - `bank-of-asgard-main/server/verifiers/vc-verifier-address/.env` → `IS_BASE_URL`
 - `bank-of-asgard-main/server/.env` → `ASGARDEO_BASE_URL` and `ASGARDEO_TOKEN_ENDPOINT`
 
-### 5. Reset Jane's profile (do this before every demo run)
+### 4. Reset Jane's profile (do this before every demo run)
 
 In the WSO2 IS Console: **Users → Jane** → edit her profile and set:
 
@@ -84,7 +72,7 @@ In the WSO2 IS Console: **Users → Jane** → edit her profile and set:
 These claims drive which features are unlocked in the app (see the demo scenario below), so
 resetting them lets you replay the full story from a clean state each time.
 
-### 6. Load Jane's wallet with her starting credentials
+### 5. Load Jane's wallet with her starting credentials
 
 Jane's wallet needs to already hold her **Person Identity** and **Utility** credentials before
 the demo starts (her **Bank** credential is issued later, mid-demo — don't provision it now).
@@ -99,7 +87,7 @@ with Lissi on your phone. It may prompt you to log in before it hands the creden
 wallet. Do **not** do this for the `Bank ID` template — see the demo scenario below for when
 that one comes in.
 
-### 7. Start the app and server
+### 6. Start the app and server
 
 ```bash
 cd <download_folder>/bank-of-asgard-main/app

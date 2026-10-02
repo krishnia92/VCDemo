@@ -42,7 +42,7 @@ Replace `<download_folder>` with wherever you've placed this folder.
 
 ```bash
 cd <download_folder>/wso2is-7.4.0-SNAPSHOT-demo/bin
-./wso2server.sh start
+./wso2server.sh
 ```
 
 Wait for `WSO2 Carbon started in X sec` before continuing.

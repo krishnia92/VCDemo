@@ -97,8 +97,7 @@ address) — loaded above.
    account — she hasn't linked a government wallet yet.
 3. Jane wants to link her government wallet to her bank account. While logged in, she clicks
    **"Link my wallet"** in the app — this triggers an OID4VP presentation from her wallet, and
-   on success links her wallet identity to her bank account (`LinkedToGovWallet` flips to
-   `true`).
+   on success links her wallet identity to her bank account.
 4. With her wallet linked, **Download Statement** and **Verify Address** are now enabled. She
    also now has the option to log out and log back in **using her wallet** instead of her
    password.

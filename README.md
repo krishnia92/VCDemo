@@ -126,11 +126,13 @@ address) — loaded in step 6 above.
 1. Jane logs into the Bank Of Asgard app the normal way (existing username/password).
 2. At this point, **Download Statement** and **Verify Address** are both disabled on her
    account — she hasn't linked a government wallet yet.
-3. Jane wants to link her government wallet to her bank account. To do this, she **logs out
-   and logs back in using her wallet** instead of her password — this is the OID4VP-based
-   wallet login, and it's what links her wallet identity to her existing bank account
-   (`LinkedToGovWallet` flips to `true`).
-4. With her wallet linked, **Download Statement** and **Verify Address** are now enabled.
+3. Jane wants to link her government wallet to her bank account. While logged in, she clicks
+   **"Link my wallet"** in the app — this triggers an OID4VP presentation from her wallet, and
+   on success links her wallet identity to her bank account (`LinkedToGovWallet` flips to
+   `true`).
+4. With her wallet linked, **Download Statement** and **Verify Address** are now enabled. She
+   also now has the option to log out and log back in **using her wallet** instead of her
+   password.
 5. Jane verifies her address — this presents her Utility Credential through the address
    verifier portal. Once verified, her address becomes visible under her profile in the app.
 6. Jane can now download her account statement.

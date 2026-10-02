@@ -140,8 +140,9 @@ address) — loaded in step 6 above.
    **Bank credential** (carrying her IBAN) to her wallet — using the app's **Issue Credentials**
    functionality and the `Bank ID` template that was deliberately held back in step 6.
 
-**Possible future improvement:** today, a customer has to already have a password-based account
-before they can link a wallet — wallet-linking happens as a post-login action. This could be
-tightened with an adaptive authentication script at the identifier-first login step, which would
-block password-based login entirely until a government wallet is linked. That's not implemented
-in this demo, just worth noting as a natural next iteration.
+**Possible future improvement:** today, a customer can log in using their wallet credentials
+even if they haven't linked their government wallet to their bank account yet — wallet-based
+login isn't currently gated on link status. This could be tightened with identifier-first login
+plus an adaptive authentication script, so that if the account isn't linked, wallet-based login
+is blocked entirely. That's not implemented in this demo, just worth noting as a natural next
+iteration.

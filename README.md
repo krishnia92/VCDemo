@@ -110,7 +110,7 @@ address) — loaded above.
 
 **Possible future improvement:** today, a customer can log in using their wallet credentials
 even if they haven't linked their government wallet to their bank account yet — wallet-based
-login isn't currently gated on link status. This could be tightened with identifier-first login
+login isn't currently gated on gov wallet linked status. This could be tightened with identifier-first login
 plus an adaptive authentication script, so that if the account isn't linked, wallet-based login
 is blocked entirely. That's not implemented in this demo, just worth noting as a natural next
 iteration.

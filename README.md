@@ -56,9 +56,30 @@ need to run them separately. Open the app at `http://localhost:5173`.
 
 ## One-time demo data setup
 
-These are done in your WSO2 IS Console, against the test user **Jane**.
+These are done in your WSO2 IS Console, against the test user **Jane**. Do the steps in this
+section once, in order, before your first demo run.
 
-### Create the credential templates (one-time, before your first demo run)
+### 1. Create the test user
+
+**Users → Add User**, and create a user with username `jane` and password `Jane@1234`. This is
+the account used throughout the demo (see Demo scenario below).
+
+### 2. Add the custom user attributes
+
+**Attributes → custom schema → Add Attribute**, and add four custom attributes to the user
+schema:
+
+- `AddressVerified`
+- `LinkedToGovWallet`
+- `LinkedWalletHolders`
+- `IBAN`
+
+Make sure each one is set to show on the user's profile in the Console (otherwise you won't be
+able to see or edit them on Jane in the steps below). `IBAN` in particular needs to exist as a
+user attribute *before* it can be added to the `Bank ID` credential template in the next step —
+a template can only reference claims that already exist on the schema, it can't create them.
+
+### 3. Create the credential templates
 
 **Verifiable Credentials → Credential Templates → Create**, and set up three templates:
 
@@ -66,14 +87,23 @@ These are done in your WSO2 IS Console, against the test user **Jane**.
 - `Utility Credential`
 - `Bank ID`
 
-When you create a template, you pick which **user claims** get carried onto the credential it
-issues — e.g. `Person Identity Credential` carries claims like given name, family name and date
-of birth; `Utility Credential` carries the address claims; `Bank ID` carries the `IBAN` claim.
-A template only maps *existing* user claims onto the credential, it doesn't create new claims —
-so if a claim you want on a credential isn't already on the user schema (e.g. the custom `IBAN`
-claim this demo uses), add it to the SCIM2 user schema first (**Attributes → custom schema**),
-and it'll then be selectable when you build the claim list on the template. Do this setup once;
-it doesn't need to be repeated between demo runs.
+When you create a template, you pick which of the user attributes from step 2 (plus standard
+ones) get carried onto the credential it issues — e.g. `Person Identity Credential` carries
+claims like given name, family name and date of birth; `Utility Credential` carries the address
+claims; `Bank ID` carries the `IBAN` claim.
+
+### 4. Create the presentation templates
+
+**Verifiable Credentials → Presentation Definitions → Create**, and create two presentation
+definitions, matching the IDs the verifier portals are already configured to request:
+
+- `personal-data-verification` — used by `verifier-portal` (port 3001) for the "Present Your
+  Digital ID" flow.
+- `utility-credential-presentation` — used by `vc-verifier-address` (port 3003) for address
+  verification.
+
+These IDs must match exactly what's set as `DEFINITION_ID` in each verifier's `.env` file — if
+you name a definition differently, update the corresponding `.env` to match instead.
 
 ### Reset Jane's profile (do this before every demo run)
 

@@ -56,12 +56,9 @@ need to run them separately. Open the app at `http://localhost:5173`.
 
 ## One-time demo data setup
 
-These are done in your WSO2 IS Console, against the test user **Jane**. Do the steps in this
-section once, in order, before your first demo run.
-
 ### 1. Create the test user
 
-**Users → Add User**, and create a user with username `jane` and password `Jane@1234`. This is
+In WSO2 IS console **Users → Add User**, and create a user with username `jane` and password `Jane@1234`. This is
 the account used throughout the demo (see Demo scenario below).
 
 ### 2. Add the custom user attributes
@@ -75,9 +72,7 @@ schema:
 - `IBAN`
 
 Make sure each one is set to show on the user's profile in the Console (otherwise you won't be
-able to see or edit them on Jane in the steps below). `IBAN` in particular needs to exist as a
-user attribute *before* it can be added to the `Bank ID` credential template in the next step —
-a template can only reference claims that already exist on the schema, it can't create them.
+able to see or edit them on Jane in the steps below). `IBAN` needs to be added as a verifiable credential attribute. 
 
 ### 3. Create the credential templates
 

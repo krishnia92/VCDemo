@@ -4,11 +4,6 @@ This folder is a self-contained demo of **Verifiable Credential issuance (OID4VC
 **Verifiable Credential presentation/verification (OID4VP)**, built on **WSO2 Identity
 Server**, wrapped in a fictional banking app called **Bank Of Asgard**.
 
-> **Status:** this is an active demo/work-in-progress pack. The setup below is what's
-> needed to run it, but the full end-to-end flow has not been exhaustively confirmed in
-> every environment — if something doesn't behave as described, check the WSO2 IS
-> console logs first (`wso2is-7.4.0-SNAPSHOT-demo/repository/logs/wso2carbon.log`).
-
 ## What's in this folder
 
 | Folder | What it is |
